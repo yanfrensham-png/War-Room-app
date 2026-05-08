@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>War Room Command Console</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>War Room Command Console</h1>
+      <p>Personal companion for writing orders and referencing your own board image.</p>
+    </div>
+    <div class="actions">
+      <button id="saveBtn">Save</button>
+      <button id="loadBtn">Load</button>
+      <button id="exportBtn">Export JSON</button>
+      <label class="fileLabel">Import JSON<input type="file" id="importJson" accept="application/json" /></label>
+      <button id="printBtn">Print / PDF</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel setupPanel">
+      <h2>Game setup</h2>
+      <div class="grid2">
+        <label>Game name<input id="gameName" placeholder="Saturday campaign" /></label>
+        <label>Round<input id="round" type="number" min="1" value="1" /></label>
+        <label>Nation<input id="nation" placeholder="e.g. Germany" /></label>
+        <label>Player<input id="player" placeholder="Your name" /></label>
+      </div>
+      <div class="lockRow">
+        <button id="lockBtn" class="primary">Lock orders</button>
+        <button id="unlockBtn" class="danger ghost">Unlock</button>
+        <span id="lockStatus" class="badge open">Unlocked</span>
+      </div>
+    </section>
+
+    <section class="panel mapPanel">
+      <div class="panelHeader">
+        <h2>Map reference</h2>
+        <label class="fileLabel">Upload map image<input type="file" id="mapUpload" accept="image/*" /></label>
+      </div>
+      <div class="mapTools">
+        <input id="territorySearch" placeholder="Search territory / note" />
+        <button id="addPinBtn">Add note pin</button>
+        <button id="clearPinsBtn" class="ghost">Clear pins</button>
+      </div>
+      <div id="mapViewport" class="mapViewport">
+        <div id="mapStage" class="mapStage">
+          <div id="mapPlaceholder">Upload your own photo/scan of the War Room board map here.</div>
+          <img id="mapImg" alt="Uploaded map reference" />
+          <div id="pinLayer"></div>
+        </div>
+      </div>
+      <p class="hint">Tip: use browser zoom or trackpad pinch. Pins are saved locally with your game.</p>
+    </section>
+
+    <section class="panel ordersPanel">
+      <div class="panelHeader">
+        <h2>Movement orders</h2>
+        <button id="addMoveBtn" class="primary">Add movement order</button>
+      </div>
+      <div id="movementList" class="orderList"></div>
+    </section>
+
+    <section class="panel ordersPanel">
+      <div class="panelHeader">
+        <h2>Production / placement orders</h2>
+        <button id="addProdBtn" class="primary">Add production order</button>
+      </div>
+      <div id="productionList" class="orderList"></div>
+    </section>
+
+    <section class="panel warningsPanel">
+      <h2>Warnings</h2>
+      <div id="warnings" class="warnings"></div>
+    </section>
+
+    <section class="panel revealPanel">
+      <div class="panelHeader">
+        <h2>Reveal sheet</h2>
+        <button id="refreshRevealBtn">Refresh</button>
+      </div>
+      <div id="revealSheet" class="revealSheet"></div>
+    </section>
+  </main>
+
+  <template id="movementTemplate">
+    <article class="orderCard movementCard">
+      <div class="orderHeader">
+        <strong>Movement order</strong>
+        <button class="removeBtn danger ghost">Remove</button>
+      </div>
+      <div class="grid4">
+        <label>Order #<input class="orderNumber" type="number" min="1" /></label>
+        <label>Command / Force<input class="commandId" placeholder="e.g. 4" /></label>
+        <label>Origin<input class="origin" placeholder="Territory / sea zone" /></label>
+        <label>Destination<input class="destination" placeholder="Territory / sea zone" /></label>
+      </div>
+      <label>Route / units / detail<textarea class="details" placeholder="Example: 3 infantry, 1 tank via..." rows="3"></textarea></label>
+      <label>Notes<textarea class="notes" rows="2"></textarea></label>
+    </article>
+  </template>
+
+  <template id="productionTemplate">
+    <article class="orderCard productionCard">
+      <div class="orderHeader">
+        <strong>Production order</strong>
+        <button class="removeBtn danger ghost">Remove</button>
+      </div>
+      <div class="grid4">
+        <label>Order #<input class="orderNumber" type="number" min="1" /></label>
+        <label>Build / action<input class="build" placeholder="e.g. 2 tanks" /></label>
+        <label>Placement<input class="placement" placeholder="Territory" /></label>
+        <label>Cost / resource note<input class="cost" placeholder="Optional" /></label>
+      </div>
+      <label>Notes<textarea class="notes" rows="2"></textarea></label>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
